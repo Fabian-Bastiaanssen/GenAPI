@@ -20,4 +20,4 @@ First minimum threshold for gene identity: $geneIden1
 Second minimum threshold for gene identity: $geneIden2
 Minimum gene length used for analysis: $geneLen
 Input folder: $input
-Output folder: $output" > ${output}/${NAME}_settings
+Output folder: $output" > ${output}/${NAME}_settings.txt

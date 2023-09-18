@@ -184,7 +184,6 @@ ls ${input}/*.ffn > ${output}/output_results/sample_list.txt
 sed -i "s/.ffn//g" ${output}/output_results/sample_list.txt
 
 cat ${input}/*.ffn > ${ALLGENES}
-cat ${input}/*.ffn
 sed -i "s/ /_/g" ${ALLGENES}
 
 CLUSTERED=${output}/output_results/clustered_genes_${NAME}.ffn
@@ -199,7 +198,7 @@ rm -f ${output}/output_results/all_genes_${NAME}
 # blast each sequence to the clustered database
 
 echo -en "-----FINDING THE BEST ALIGNMENT FOR EACH GENE SEQUENCE-----\n"
-bash ${SCRIPT_DIR}/gene_db_alignment_against_seq.sh  ${NAME} ${geneCov1} ${geneCov2} ${geneIden1} ${geneIden2} ${THREADS} ${output} ${input}
+bash ${SCRIPT_DIR}/gene_db_alignment_against_seq.sh  ${NAME} ${geneCov1} ${geneCov2} ${geneIden1} ${geneIden2} ${THREADS} ${output} ${input} ${THREADS}
 
 echo -en "-----CREATING GENE PRESENCE/ABSENCE MATRIX-----\n"
 bash ${SCRIPT_DIR}/convert_gene_alignment_to_binary.sh  ${NAME} ${geneCov1} ${geneCov2} ${geneIden1} ${geneIden2} ${geneLen} ${output} ${input}
@@ -238,8 +237,9 @@ then
 	
 	echo -en "-----PLOTTING GENE PRESENCE-ABSENCE HEATMAPS-----\n"
 	# generate the gene presence-absence matrix visualization for only gained/lost genes
-	heatmaps=`command -v generate_heatmaps.R`
+	heatmaps=`command -v $SCRIPT_DIR/generate_heatmaps.R`
 	Rscript $heatmaps ${NAME} ${output}
+        bash Rscript $heatmaps ${NAME} ${output}
 
 fi
 
